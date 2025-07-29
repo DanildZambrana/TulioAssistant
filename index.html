@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universidad Martín Lutero Ocotal</title>
+  <!-- Fuente Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+        /* --- FORMULARIO DE CONTACTO (nuevo) --- */
+  /* --- BOT DE ASISTENCIA GLOBAL --- */
+          .bot-fab {
+              position: fixed;
+              bottom: 30px;
+              right: 30px;
+              z-index: 1100;
+              background: linear-gradient(135deg, var(--azul-medio) 60%, var(--dorado) 100%);
+              color: #fff;
+              border: none;
+              border-radius: 50%;
+              width: 64px;
+              height: 64px;
+              box-shadow: 0 4px 24px #0003;
+              cursor: pointer;
+              font-size: 2.2rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: box-shadow 0.2s, background 0.2s;
+          }
+          .bot-fab:hover {
+              box-shadow: 0 8px 32px #0004;
+              background: linear-gradient(135deg, var(--dorado) 40%, var(--azul-medio) 100%);
+          }
+          .bot-widget {
+              position: fixed;
+              bottom: 110px;
+              right: 30px;
+              width: 370px;
+              max-width: 95vw;
+              background: #fff;
+              border-radius: 18px 18px 0 18px;
+              box-shadow: 0 8px 32px #0003;
+              border: 2.5px solid var(--azul-medio);
+              z-index: 1200;
+              display: none;
+              flex-direction: column;
+              overflow: hidden;
+              animation: botFadeIn 0.3s;
+              transition: box-shadow 0.2s, transform 0.2s;
+              cursor: grab;
+          }
+          .bot-widget.dragging {
+              box-shadow: 0 12px 40px #0005;
+              opacity: 0.95;
+              cursor: grabbing;
+              transition: none;
+          }
+          @keyframes botFadeIn {
+              from { opacity: 0; transform: translateY(40px); }
+              to { opacity: 1; transform: translateY(0); }
+          }
+          .bot-header {
+              background: linear-gradient(90deg, var(--azul-medio) 80%, var(--dorado) 100%);
+              color: #fff;
+              padding: 1rem 1.2rem;
+              border-radius: 16px 16px 0 0;
+              font-weight: bold;
+              font-size: 1.1rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+          }
+          .bot-close {
+              background: none;
+              border: none;
+              color: #fff;
+              font-size: 1.5rem;
+              cursor: pointer;
+              margin-left: 10px;
+              transition: color 0.2s;
+          }
+          .bot-close:hover { color: var(--dorado); }
+          .bot-body {
+              padding: 1.2rem;
+              min-height: 90px;
+              max-height: 260px;
+              overflow-y: auto;
+              background: #f7fafd;
+          }
+          .bot-footer {
+              padding: 0.7rem 1.2rem;
+              border-top: 1px solid #eee;
+              background: #f4f6fb;
+              display: flex;
+              gap: 0.5rem;
+          }
+          .bot-input {
+              flex: 1;
+              padding: 0.6rem;
+              border-radius: 7px;
+              border: 1.5px solid #b0b8d1;
+              font-size: 1rem;
+          }
+          .bot-send {
+              padding: 0.6rem 1.2rem;
+              background: var(--azul-medio);
+              color: #fff;
+              border: none;
+              border-radius: 7px;
+              cursor: pointer;
+              font-weight: bold;
+              transition: background 0.2s;
+          }
+          .bot-send:hover { background: var(--dorado); color: var(--azul-oscuro); }
+          @media (max-width: 700px) {
+              .bot-widget { width: 99vw; right: 0.5vw; bottom: 80px; }
+              .bot-fab { right: 2vw; }
+          }
+          :root {
+              --azul-oscuro: #1a237e;
+              --azul-medio: #00509e;
+              --azul-claro: #e3eafc;
+              --dorado: #fbc02d;
+              --gris-fondo: #f4f6fb;
+          }
+          body { font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif; margin: 0; background: var(--gris-fondo); color: #222; }
+          /* Header hero personalizado */
+          .header-hero {
+            position: relative;
+            min-height: 420px;
+            background: url('UML-Imagenes.png/Imagen de WhatsApp 2025-07-28 a las 17.29.17_c8cf8727.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: stretch;
+          }
+          .header-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+          }
+          .header-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 2rem 2rem;
+            display: flex;
+            flex-direction: column;
+          }
+          .header-hero-content nav.nav-global {
+            display: flex;
+            gap: 2.5rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+          }
+          .header-hero-content nav.nav-global a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding-bottom: 2px;
+            transition: color 0.2s, border-bottom 0.2s;
+            border-bottom: 2.5px solid transparent;
+          }
+          .header-hero-content nav.nav-global a.active {
+            color: #ff7043;
+            border-bottom: 2.5px solid #ff7043;
+          }
+          .header-hero-content nav.nav-global a:hover {
+            color: #ff7043;
+            border-bottom: 2.5px solid #ff7043;
+          }
+          .header-hero-content img {
+            max-height: 90px;
+            max-width: 320px;
+            object-fit: contain;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            margin-right: 1.5rem;
+          }
+          .header-hero-content h1 {
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            line-height: 1.1;
+            text-shadow: 0 4px 24px #000a, 0 1px 0 #2228;
+            margin: 0 0 0.5rem 0;
+          }
+          .header-hero-content a {
+            font-family: 'Montserrat', Arial, sans-serif;
+          }
+          .container { max-width: 1200px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 16px #0001; padding: 2.5rem 2rem; }
+          .section { margin-bottom: 2.5rem; }
+          .section img { max-width: 100%; border-radius: 10px; margin: 1rem 0; }
+          .matricula { background: var(--azul-claro); border-left: 8px solid var(--azul-medio); padding: 1.5rem; border-radius: 10px; margin-bottom: 2rem; }
+          .matricula h2 { color: var(--azul-medio); }
+          .stats { display: flex; gap: 2rem; justify-content: space-around; margin: 2rem 0; }
+          .stat { background: var(--azul-medio); color: #fff; border-radius: 8px; padding: 1.5rem 2rem; text-align: center; min-width: 120px; font-size: 1.2rem; box-shadow: 0 2px 8px #0001; }
+          .eventos, .novedades, .docentes, .galeria { display: flex; flex-wrap: wrap; gap: 2rem; }
+          .evento, .novedad, .docente, .video { background: var(--azul-claro); border-radius: 10px; padding: 1rem; flex: 1 1 250px; min-width: 220px; box-shadow: 0 1px 4px #0001; }
+          .evento img, .novedad img, .video img { width: 100%; border-radius: 8px; }
+          .docente img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 0.5rem; }
+          .bot-widget { position: fixed; bottom: 30px; right: 30px; width: 350px; max-width: 90vw; background: #fff; border-radius: 12px 12px 0 12px; box-shadow: 0 4px 24px #0003; border: 2px solid var(--azul-medio); z-index: 1000; }
+          .bot-header { background: var(--azul-medio); color: #fff; padding: 0.7rem 1rem; border-radius: 10px 10px 0 0; font-weight: bold; }
+          .bot-body { padding: 1rem; min-height: 80px; }
+          .bot-footer { padding: 0.5rem 1rem; border-top: 1px solid #eee; }
+          .bot-input { width: 80%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc; }
+          .bot-send { padding: 0.5rem 1rem; background: var(--azul-medio); color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+          footer { background: var(--azul-oscuro); color: #fff; text-align: center; padding: 2rem 0 1rem 0; margin-top: 3rem; font-size: 1rem; }
+          footer a { color: #fff; text-decoration: underline; }
+          @media (max-width: 900px) {
+              .container { padding: 1rem; }
+              .stats { flex-direction: column; gap: 1rem; }
+              .eventos, .novedades, .docentes, .galeria { flex-direction: column; gap: 1rem; }
+              .bot-widget { width: 98vw; right: 1vw; }
+          }
+  </style>
+</head>
+
+<body>
+  <header class="header-hero" style="position:relative;min-height:420px;background:url('UML-Imagenes.png/Imagen de WhatsApp 2025-07-28 a las 17.29.17_c8cf8727.jpg') center/cover no-repeat;">
+    <div class="header-hero-overlay" style="position:absolute;inset:0;background:rgba(0,0,0,0.45);"></div>
+    <div class="header-hero-content" style="position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:2.5rem 2rem 2rem 2rem;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <img src="UML-Imagenes.png/Blanco-PNG.png" alt="Logo UML Blanco">
+        <nav class="nav-global">
+          <a href="#" class="active">INICIO</a>
+          <a href="#">ACADÉMICA</a>
+          <a href="#">INVESTIGACIÓN</a>
+          <a href="#">CONTACTO</a>
+          <a href="#">EVENTOS</a>
+          <a href="#">SERVICIOS</a>
+        </nav>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-top:2.5rem;">
+        <h1 style="color:#fff;font-size:3.5rem;font-weight:800;text-align:center;line-height:1.1;text-shadow:0 4px 24px #0007;">EQUIPOS CON ENFOQUE<br>CREATIVO</h1>
+        <a href="#" style="margin-top:2.5rem;background:#1ec773;color:#fff;padding:1.1rem 2.5rem;border-radius:8px;font-size:1.2rem;font-weight:700;box-shadow:0 2px 8px #0003;text-decoration:none;">OFERTA DE CARRERAS</a>
+        <div style="color:#fff;font-size:1.5rem;margin-top:2.2rem;text-shadow:0 2px 8px #0007;">¡Explora Ahora!</div>
+      </div>
+    </div>
+  </header>
+    <div class="container">
+      <section class="section matricula">
+        <h2>¡YA PUEDES MATRICULARTE!</h2>
+        <p>¡Tu viaje educativo comienza aquí!
+          <strong>MATRÍCULAS ABIERTAS</strong>
+        </p>
+        <p>Inicio de clases:
+          <b>01 de marzo de 2025</b>
+        </p>
+        <p>Para más información:
+          <a href="tel:+50583334096">+505 8333 4096</a>|
+          <a href="tel:+50588284759">+505 8828 4759</a>
+        </p>
+        <p>Dirección: Planta Potabilizadora de ENACAL, 200 mts. al Norte. Ocotal, Nueva Segovia, Nicaragua.</p>
+        <a href="https://ocotal.uml.edu.ni/wp-content/uploads/2023/06/RedJI-575x1024.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 175010.png" alt="Cartel promocional de Red de Jóvenes Investigadores con una persona joven sosteniendo un libro y sonriendo con confianza, fondo colorido con elementos académicos, texto RedJI destacado, ambiente positivo y motivador que invita a la participación juvenil en investigación">
+        </a>
+        </a>
+          <a href="https://forms.gle/Y7YMNABmmbv6qb788" target="_blank" rel="noopener noreferrer">https://forms.gle/Y7YMNABmmbv6qb788</a>
+        </p>
+      </section>
+      <section class="section">
+        <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 170230.png" alt="Oferta Académica" style="width:100%;height:auto;display:block;border-radius:12px;box-shadow:0 2px 12px #0001;margin-bottom:2rem;">
+        <h2>Oferta Académica 2025</h2>
+        <ul>
+          <li>Licenciatura en Ciencias de la Educación</li>
+          <li>Licenciatura en Psicología</li>
+          <li>Licenciatura en Derecho</li>
+          <li>Ingeniería en Sistemas</li>
+          <li>Modalidad Sabatino</li>
+        </ul>
+      </section>
+      <section class="section stats">
+        <div class="stat">
+          <strong>+1000</strong>
+          <br>ESTUDIANTES
+        </div>
+        <div class="stat">
+          <strong>+300</strong>
+          <br>GRADUADOS
+        </div>
+        <div class="stat">
+          <strong>2025</strong>
+          <br>MATRÍCULA NACIONAL
+        </div>
+      </section>
+      <section class="section">
+        <h2>Eventos Próximos</h2>
+        <div class="eventos">
+          <div class="evento convocatoria-redji-flex">
+            <div class="convocatoria-redji-img">
+              <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/06/RedJI-575x1024.jpg" alt="RedJI">
+            </div>
+            <div class="convocatoria-redji-info">
+              <h4 style="color:#d13c1d;font-size:1.2rem;font-weight:700;margin-bottom:1.2rem;">Red de Jóvenes Investigadores “Empoderando Mentes Curiosas”.</h4>
+              <div style="font-size:1.08rem;color:#222;margin-bottom:1.2rem;line-height:1.7;">
+                Se hace formal invitación a todos los estudiantes de UML Ocotal, a través de esta convocatoria, para que puedan ser parte de la Red de Jóvenes Investigadores de nuestra sede. A partir del próximo sábado 01 de julio, se visitarán las aulas para darles a conocer esta iniciativa.
+              </div>
+              <div style="font-size:1.08rem;color:#222;margin-bottom:1.2rem;line-height:1.7;">
+                Además, los estudiantes que estén interesados desde ya, se les deja este enlace para que puedan registrar sus datos básicos:
+              </div>
+              <div style="font-size:1.1rem;margin-bottom:1.2rem;">
+                <a href="https://forms.gle/Y7YMNABmmbv6qb788" target="_blank" rel="noopener noreferrer" style="color:#00509e;font-weight:600;text-decoration:underline;">https://forms.gle/Y7YMNABmmbv6qb788</a>
+              </div>
+              <div style="font-size:1.08rem;color:#555;">Convocatoria abierta para estudiantes.</div>
+            </div>
+          </div>
+        </div>
+        <style>
+        .convocatoria-redji-flex {
+          display: flex;
+          gap: 2.2rem;
+          align-items: stretch;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 2px 12px #0001;
+          overflow: hidden;
+          margin-bottom: 2rem;
+        }
+        .convocatoria-redji-img {
+          flex: 1.1;
+          min-width: 220px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #eaeaea;
+        }
+        .convocatoria-redji-img img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          min-height: 320px;
+          border-radius: 0;
+        }
+        .convocatoria-redji-info {
+          flex: 1.7;
+          padding: 2.2rem 2rem 2.2rem 2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          background: #fff;
+        }
+        @media (max-width: 900px) {
+          .convocatoria-redji-flex { flex-direction: column; }
+          .convocatoria-redji-img { min-height: 180px; }
+          .convocatoria-redji-info { padding: 1.2rem 0.7rem; }
+        }
+        </style>
+      </section>
+      <section class="section">
+        <h2>Novedades y Artículos</h2>
+        <div class="novedades">
+          <div class="novedad">
+            <img src="UML-Imagenes.png/WhatsApp-Image-2023-05-17-at-3.38.19-PM-1024x658.jpeg" alt="Capacitación DIRAC">
+            <h4>
+              <a href="https://ocotal.uml.edu.ni/2023/05/17/capacitacion-con-dirac/" target="_blank" rel="noopener noreferrer">CAPACITACIÓN CON DIRAC</a>
+            </h4>
+            <p>17 de mayo, 2023</p>
+          </div>
+          <div class="novedad">
+            <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-06-at-2.03.41-PM-1-300x225.jpeg" alt="Día del Libro">
+            <h4>
+              <a href="https://ocotal.uml.edu.ni/2023/05/06/conmemoracion-dia-del-libro-2023/" target="_blank" rel="noopener noreferrer">Conmemoración Día del Libro 2023</a>
+            </h4>
+            <p>6 de mayo, 2023</p>
+          </div>
+          <div class="novedad">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 170423.png" alt="Laboratorio de Farmacia">
+            <h4>
+              <a href="https://ocotal.uml.edu.ni/2023/01/28/importante-laboratorio-de-farmacia/" target="_blank" rel="noopener noreferrer">Importante Laboratorio de Farmacia</a>
+            </h4>
+            <p>28 de enero, 2023</p>
+          </div>
+          <div class="novedad">
+            <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/01/Fotodestacada-740x530.jpg" alt="Visita Hospital Psicosocial">
+            <h4>
+              <a href="https://ocotal.uml.edu.ni/2023/01/28/visita-a-hospital-psicosocial-en-managua/" target="_blank" rel="noopener noreferrer">Visita a Hospital Psicosocial en Managua</a>
+            </h4>
+            <p>28 de enero, 2023</p>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Nuestro Claustro Docente</h2>
+        <div class="docentes">
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 163336.png" alt="German Desayes">
+            <b>MSc. German Desayes</b>
+            <br>
+            <span>Coordinador de Carrera</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 163439.png" alt="Maura Rivera">
+            <b>Lic. Maura Rivera</b>
+            <br>
+            <span>Docente</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 163501.png" alt="Aristóteles Arana">
+            <b>Prof. Aristóteles Arana</b>
+            <br>
+            <span>Docente</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 161816.png" alt="Brenda Rubio">
+            <b>Lic. Brenda Rubio</b>
+            <br>
+            <span>Docente</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 161837.png" alt="Deyra Lanuza">
+            <b>Ing. Deyra Lanuza</b>
+            <br>
+            <span>Docente</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 162234.png" alt="Patricia Martínez">
+            <b>Lic. Patricia Martínez</b>
+            <br>
+            <span>Docente</span>
+          </div>
+          <div class="docente">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 163415.png" alt="Paula Marín">
+            <b>MSc. Paula Marín</b>
+            <br>
+            <span>Docente</span>
+          </div>
+        </div>
+      </section>
+      <section class="section">
+        <h2>Galería de Videos</h2>
+        <div class="galeria">
+          <div class="video">
+            <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/06/diaEnfermera.jpg" alt="Día de la Enfermera">
+            <b>Feliz Día de la Enfermera y Enfermero</b>
+            <br>
+            <span>12 de Mayo de 2023</span>
+          </div>
+          <div class="video">
+            <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/01/image-1-760x428.png" alt="Escape Room Educativo">
+            <b>Escape Room Educativo</b>
+            <br>
+            <span>23 de Enero de 2023</span>
+          </div>
+          <div class="video">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 161740.png" alt="Investigaciones por Concurso">
+            <b>Investigaciones por Concurso</b>
+            <br>
+            <span>26 de Agosto de 2022</span>
+          </div>
+        </div>
+      </section>
+      <!-- Bloque especial "Construimos el Futuro" -->
+      <section class="section futuro-captura" style="padding:0;margin-bottom:2.5rem;">
+        <div class="futuro-captura-flex" style="display:flex;min-height:420px;border-radius:18px;overflow:hidden;box-shadow:0 2px 16px #0002;background:#fafbfc;">
+          <div class="futuro-captura-img" style="flex:1.1;background:#eaeaea;display:flex;align-items:center;justify-content:center;min-width:340px;">
+            <img src="UML-Imagenes.png/Imagen de WhatsApp 2025-07-28 a las 17.08.41_c2a4c3f0.jpg" alt="Estudiantes UML" style="width:100%;height:100%;object-fit:cover;min-height:420px;">
+          </div>
+          <div class="futuro-captura-info" style="flex:1.3;padding:3.5rem 3rem 3.5rem 3rem;display:flex;flex-direction:column;justify-content:center;background:#fff;">
+            <div style="color:#b0b0b0;font-size:1.15rem;margin-bottom:0.7rem;letter-spacing:1px;">La Mejor Elección</div>
+            <h2 style="font-size:2.7rem;font-weight:800;margin:0 0 1.2rem 0;line-height:1.1;color:#222;">Construimos el Futuro con Educación</h2>
+            <div style="width:60px;height:3px;background:#1ec773;border-radius:2px;margin-bottom:1.5rem;"></div>
+            <p style="font-size:1.25rem;max-width:600px;margin-bottom:2.2rem;color:#444;">Nuestro mayor propósito, es formar profesionales con calidad, calidez y valores cristianos, que sean piezas claves en el desarrollo científico del país.</p>
+            <div style="display:flex;gap:2.5rem;flex-wrap:wrap;">
+              <div style="flex:1 1 220px;min-width:200px;max-width:320px;margin-bottom:1.5rem;">
+                <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:0.5rem;">
+                  <span style="font-size:2.1rem;color:#ff7043;">&#128196;</span>
+                  <span style="font-size:1.25rem;font-weight:600;color:#222;">Título Profesional</span>
+                </div>
+                <div style="color:#555;font-size:1.08rem;">El estudiante egresado de Universidad Martín Lutero, obtiene su título profesional en un tiempo récord, nuestros trámites son ágiles y efectivos.</div>
+                <div style="margin-top:0.7rem;"><a href="#" style="color:#1ec773;text-decoration:underline;font-size:1.05rem;">MÁS INFORMACIÓN</a></div>
+              </div>
+              <div style="flex:1 1 220px;min-width:200px;max-width:320px;margin-bottom:1.5rem;">
+                <div style="display:flex;align-items:center;gap:0.7rem;margin-bottom:0.5rem;">
+                  <span style="font-size:2.1rem;color:#ff7043;">&#128161;</span>
+                  <span style="font-size:1.25rem;font-weight:600;color:#222;">Carreras Pertinentes</span>
+                </div>
+                <div style="color:#555;font-size:1.08rem;">Nuestras carreras son pertinentes a las necesidades que la sociedad demanda. Trabajamos para crear nuevas y mejores profesiones.</div>
+                <div style="margin-top:0.7rem;"><a href="#" style="color:#1ec773;text-decoration:underline;font-size:1.05rem;">MÁS INFORMACIÓN</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Sección de contacto -->
+      <section class="section" id="contacto">
+        <div class="contacto2-flex">
+          <div class="contacto2-form-wrap">
+            <h3 class="contacto2-titulo">Contacta con nosotros</h3>
+            <h2 class="contacto2-pregunta">¿Tienes alguna consulta?</h2>
+            <div class="contacto2-barra"></div>
+            <form class="contacto2-form" autocomplete="off" onsubmit="enviarContacto(event)">
+              <div class="contacto2-row">
+                <div class="contacto2-col">
+                  <label for="nombre">Tu Nombre*</label>
+                  <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="contacto2-col">
+                  <label for="correo">Tu Correo*</label>
+                  <input type="email" id="correo" name="correo" required>
+                </div>
+              </div>
+              <label for="asunto">Asunto</label>
+              <input type="text" id="asunto" name="asunto">
+              <label for="mensaje">Escribe tu mensaje*</label>
+              <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+              <button type="submit">ENVIAR MENSAJE</button>
+              <div id="contactoMsg"></div>
+            </form>
+          </div>
+          <div class="contacto2-img"></div>
+        </div>
+        <style>
+        .contacto2-flex {
+          display: flex;
+          min-height: 480px;
+          border-radius: 0.8rem;
+          overflow: hidden;
+          box-shadow: 0 2px 16px #0002;
+          background: #fff;
+          margin-bottom: 2.5rem;
+        }
+        .contacto2-form-wrap {
+          flex: 1 1 420px;
+          background: #fff;
+          padding: 3.5rem 2.5rem 2.5rem 3.5rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .contacto2-titulo {
+          color: #444;
+          font-size: 1.3rem;
+          font-weight: 400;
+          margin-bottom: 0.7rem;
+        }
+        .contacto2-pregunta {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin: 0 0 0.7rem 0;
+          color: #111;
+        }
+        .contacto2-barra {
+          width: 60px;
+          height: 3px;
+          background: #1ec773;
+          border-radius: 2px;
+          margin-bottom: 2.2rem;
+        }
+        .contacto2-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+        .contacto2-row {
+          display: flex;
+          gap: 2.5rem;
+        }
+        .contacto2-col {
+          flex: 1 1 0;
+          display: flex;
+          flex-direction: column;
+        }
+        .contacto2-form label {
+          color: #888;
+          font-size: 1.08rem;
+          margin-bottom: 0.2rem;
+        }
+        .contacto2-form input,
+        .contacto2-form textarea {
+          border: none;
+          border-bottom: 2px solid #e0e0e0;
+          padding: 0.7rem 0.2rem;
+          font-size: 1.1rem;
+          background: transparent;
+          color: #222;
+          outline: none;
+          margin-bottom: 0.5rem;
+          transition: border-color 0.2s;
+        }
+        .contacto2-form input:focus,
+        .contacto2-form textarea:focus {
+          border-bottom: 2px solid #1ec773;
+        }
+        .contacto2-form textarea {
+          min-height: 90px;
+          max-height: 200px;
+          resize: vertical;
+        }
+        .contacto2-form button[type="submit"] {
+          background: #1ec773;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          padding: 1rem 0;
+          font-size: 1.1rem;
+          font-weight: bold;
+          cursor: pointer;
+          margin-top: 0.5rem;
+          transition: background 0.2s, color 0.2s;
+        }
+        .contacto2-form button[type="submit"]:hover {
+          background: #17a65c;
+        }
+        #contactoMsg {
+          color: #1ec773;
+          font-weight: bold;
+          margin-top: 0.5rem;
+          min-height: 1.2em;
+        }
+        .contacto2-img {
+          flex: 1 1 420px;
+          min-height: 420px;
+          background: url('UML-Imagenes.png/Captura de pantalla 2025-07-28 135928.png') center/cover no-repeat;
+        }
+        @media (max-width: 900px) {
+          .contacto2-flex { flex-direction: column; }
+          .contacto2-img { min-height: 220px; }
+          .contacto2-form-wrap { padding: 2rem 1rem; }
+        }
+        </style>
+        </div>
+      </section>
+    </div>
+    <!-- Botón flotante y chat del bot de asistencia (puedes copiar este bloque a cualquier página) -->
+    <button id="botToggleBtn" class="bot-fab" aria-label="Abrir chat de asistencia">💬</button>
+    <div class="bot-widget" id="botWidget">
+      <div class="bot-header">
+        <span>Asistente UML Ocotal</span>
+        <button id="botCloseBtn" class="bot-close" aria-label="Cerrar chat">&times;</button>
+      </div>
+      <div class="bot-body" id="botBody">¡Hola! ¿En qué puedo ayudarte?</div>
+      <div class="bot-footer">
+        <input class="bot-input" id="botInput" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
+        <button class="bot-send" onclick="enviarMensaje()">Enviar</button>
+      </div>
+    </div>
+    <footer>
+      <!-- Interfaz final de contacto y noticias recientes (footer) -->
+      <section class="section interfaz-final">
+        <div class="interfaz-final-wrap">
+          <div class="interfaz-final-col interfaz-final-contacto">
+            <img src="UML-Imagenes.png/Captura de pantalla 2025-07-28 165026.png" alt="Logo UML Ocotal" class="interfaz-final-logo">
+            <div class="interfaz-final-mapa">
+              <iframe src="https://www.google.com/maps?q=Universidad+Mart%C3%ADn+Lutero+Sede+Ocotal&output=embed" width="100%" height="180" style="border:0;border-radius:10px;box-shadow:0 2px 8px #0002;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <div class="interfaz-final-datos">
+              <div class="interfaz-final-dato"><span class="interfaz-final-icono">&#128100;</span> Universidad Martín Lutero Sede Ocotal Planta de ENACAL, 200mts al Norte.</div>
+              <div class="interfaz-final-dato"><span class="interfaz-final-icono">&#9993;</span> info.ocotal0201@uml.edu.ni</div>
+              <div class="interfaz-final-dato"><span class="interfaz-final-icono">&#128222;</span> +505 83334096</div>
+            </div>
+          </div>
+          <div class="interfaz-final-col interfaz-final-noticias">
+            <h3 class="interfaz-final-titulo">Noticias Recientes</h3>
+            <div class="interfaz-final-noticia">
+              <img src="UML-Imagenes.png/WhatsApp-Image-2023-05-17-at-3.38.19-PM-1024x658.jpeg" alt="Capacitación con DIRAC">
+              <div>
+                <b>CAPACITACIÓN CON DIRAC</b>
+                <div class="interfaz-final-fecha">mayo 17, 2023</div>
+              </div>
+            </div>
+            <div class="interfaz-final-noticia">
+              <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-06-at-2.03.41-PM-1-300x225.jpeg" alt="Día del Libro">
+              <div>
+                <b>Conmemoración Día del Libro 2023</b>
+                <div class="interfaz-final-fecha">mayo 6, 2023</div>
+              </div>
+            </div>
+            <div class="interfaz-final-noticia">
+              <img src="https://ocotal.uml.edu.ni/wp-content/uploads/2023/01/Fotodestacada-740x530.jpg" alt="Laboratorio de Farmacia">
+              <div>
+                <b>Importante Laboratorio de Farmacia</b>
+                <div class="interfaz-final-fecha">enero 28, 2023</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>
+        .interfaz-final {
+          background: #231f20;
+          color: #fff;
+          padding: 3.5rem 0 2.5rem 0;
+          margin-top: 0;
+        }
+        .interfaz-final-wrap {
+          display: flex;
+          gap: 3.5rem;
+          max-width: 1200px;
+          margin: 0 auto;
+          align-items: flex-start;
+        }
+        .interfaz-final-col {
+          flex: 1 1 0;
+        }
+        .interfaz-final-contacto {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .interfaz-final-logo {
+          max-width: 420px;
+          width: 100%;
+          margin-bottom: 1.5rem;
+          display: block;
+        }
+        .interfaz-final-mapa {
+          width: 100%;
+          margin-bottom: 1.5rem;
+        }
+        .interfaz-final-datos {
+          margin-top: 1.2rem;
+          font-size: 1.1rem;
+        }
+        .interfaz-final-dato {
+          margin-bottom: 0.7rem;
+          display: flex;
+          align-items: center;
+          gap: 0.7em;
+        }
+        .interfaz-final-icono {
+          font-size: 1.3em;
+          color: #fbc02d;
+        }
+        .interfaz-final-noticias {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .interfaz-final-titulo {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+        }
+        .interfaz-final-noticia {
+          display: flex;
+          align-items: center;
+          gap: 1.2rem;
+          background: #181616;
+          border-radius: 10px;
+          padding: 0.7rem 1.2rem;
+          margin-bottom: 1.1rem;
+        }
+        .interfaz-final-noticia img {
+          width: 70px;
+          height: 70px;
+          object-fit: cover;
+          border-radius: 8px;
+          background: #fff;
+        }
+        .interfaz-final-fecha {
+          font-size: 1rem;
+          color: #ccc;
+        }
+        @media (max-width: 900px) {
+          .interfaz-final-wrap { flex-direction: column; gap: 2rem; }
+          .interfaz-final-logo { max-width: 98vw; }
+        }
+        </style>
+      </section>
+    </footer>
+    <!-- Banner de cookies -->
+    <div id="cookieBanner">
+      Este sitio utiliza cookies para mejorar tu experiencia. Al continuar navegando aceptas nuestra
+      <a href="#" class="cookie-link">Política de Cookies</a>.
+      <button onclick="aceptarCookies()" class="cookie-btn">Aceptar</button>
+    </div>
+    <script>
+  // Banner de cookies
+          function aceptarCookies() {
+              document.getElementById('cookieBanner').style.display = 'none';
+              localStorage.setItem('cookiesUmlOcotal', 'aceptadas');
+          }
+          window.addEventListener('DOMContentLoaded', function() {
+              if(!localStorage.getItem('cookiesUmlOcotal')) {
+                  document.getElementById('cookieBanner').style.display = 'block';
+              }
+          });
+  
+          // Envío simulado del formulario de contacto
+          function enviarContacto(e) {
+              e.preventDefault();
+              document.getElementById('contactoMsg').textContent = '¡Gracias por contactarnos! Pronto responderemos.';
+              setTimeout(()=>{ document.getElementById('contactoMsg').textContent = ''; }, 4000);
+              e.target.reset();
+          }
+          // Botón para mostrar/ocultar el chat
+          const botWidget = document.getElementById('botWidget');
+          const botToggleBtn = document.getElementById('botToggleBtn');
+          const botCloseBtn = document.getElementById('botCloseBtn');
+          botToggleBtn.onclick = function() {
+              botWidget.style.display = 'flex';
+              botWidget.style.transform = 'scale(0.8)';
+              setTimeout(() => {
+                  botWidget.style.transform = 'scale(1)';
+                  document.getElementById('botInput').focus();
+              }, 10);
+              botToggleBtn.style.display = 'none';
+          };
+          botCloseBtn.onclick = function() {
+              botWidget.style.transform = 'scale(0.8)';
+              setTimeout(() => {
+                  botWidget.style.display = 'none';
+                  botToggleBtn.style.display = 'flex';
+              }, 180);
+          };
+          function enviarMensaje() {
+              const input = document.getElementById('botInput');
+              const body = document.getElementById('botBody');
+              const userMsg = input.value.trim();
+              if(userMsg !== '') {
+                  body.innerHTML += `<div style='margin-top:8px; color:var(--azul-medio);'><b>Tú:</b> ${userMsg}</div>`;
+                  setTimeout(() => {
+                      // Respuesta simulada del bot
+                      let respuesta = '';
+                      if(/hola|buenas/i.test(userMsg)) {
+                        respuesta = '¡Hola! ¿En qué puedo ayudarte?';
+                      } else if(/matricula|inscrip/i.test(userMsg)) {
+                        respuesta = 'Puedes matricularte en línea o visitando nuestra sede. ¿Te gustaría el enlace de matrícula?';
+                      } else if(/carrera|oferta/i.test(userMsg)) {
+                        respuesta = 'Ofrecemos varias carreras: Educación, Psicología, Derecho e Ingeniería en Sistemas.';
+                      } else if(/contacto|telefono|correo/i.test(userMsg)) {
+                        respuesta = 'Puedes contactarnos al +505 8333 4096 o info.ocotal0201@uml.edu.ni';
+                      } else if(/gracias|thank/i.test(userMsg)) {
+                        respuesta = '¡Con gusto! Si tienes otra consulta, aquí estoy.';
+                      } else {
+                        respuesta = 'Esta es una respuesta simulada. Pronto el bot será más inteligente.';
+                      }
+                      body.innerHTML += `<div style='margin-top:8px;'><b>Bot:</b> ${respuesta}</div>`;
+                      body.scrollTop = body.scrollHeight;
+                  }, 600);
+                  input.value = '';
+                  body.scrollTop = body.scrollHeight;
+              }
+          }
+          document.addEventListener('keydown', function(e) {
+              if(botWidget.style.display === 'flex' && e.key === 'Escape') {
+                  botWidget.style.transform = 'scale(0.8)';
+                  setTimeout(() => {
+                      botWidget.style.display = 'none';
+                      botToggleBtn.style.display = 'flex';
+                  }, 180);
+              }
+          });
+          document.addEventListener('DOMContentLoaded', function() {
+              document.getElementById('botInput').addEventListener('keydown', function(e) {
+                  if(e.key === 'Enter') enviarMensaje();
+              });
+          });
+  
+          // Hacer la ventana del bot arrastrable
+          let isDragging = false, dragOffsetX = 0, dragOffsetY = 0;
+          const header = botWidget.querySelector('.bot-header');
+          header.style.cursor = 'move';
+          header.addEventListener('mousedown', function(e) {
+              isDragging = true;
+              botWidget.classList.add('dragging');
+              const rect = botWidget.getBoundingClientRect();
+              dragOffsetX = e.clientX - rect.left;
+              dragOffsetY = e.clientY - rect.top;
+              document.body.style.userSelect = 'none';
+          });
+          document.addEventListener('mousemove', function(e) {
+              if(isDragging) {
+                  let x = e.clientX - dragOffsetX;
+                  let y = e.clientY - dragOffsetY;
+                  // Limitar dentro de la ventana
+                  x = Math.max(0, Math.min(window.innerWidth - botWidget.offsetWidth, x));
+                  y = Math.max(0, Math.min(window.innerHeight - botWidget.offsetHeight, y));
+                  botWidget.style.left = x + 'px';
+                  botWidget.style.top = y + 'px';
+                  botWidget.style.right = 'auto';
+                  botWidget.style.bottom = 'auto';
+                  botWidget.style.position = 'fixed';
+              }
+          });
+          document.addEventListener('mouseup', function() {
+              if(isDragging) {
+                  isDragging = false;
+                  botWidget.classList.remove('dragging');
+                  document.body.style.userSelect = '';
+              }
+          });
+    </script>
+</body>
+
+</html>
