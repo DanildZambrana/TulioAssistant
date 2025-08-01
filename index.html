@@ -891,6 +891,9 @@
               }
           });
     </script>
+    const uuid =  crypto.randomUUID();
+                    body: JSON.stringify({question: userMsg, sessionId: uuid})
+                let respuesta = data.answer || data.response;
 </body>
 
 </html>
