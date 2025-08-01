@@ -773,6 +773,7 @@
       <button onclick="aceptarCookies()" class="cookie-btn">Aceptar</button>
     </div>
     <script>
+      const uuid =  crypto.randomUUID();
   // Banner de cookies
           function aceptarCookies() {
               document.getElementById('cookieBanner').style.display = 'none';
@@ -827,10 +828,10 @@
                       const response = await fetch('https://automate.danild.dev/webhook/chatbot', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ message: userMsg })
+                          body: JSON.stringify({question: userMsg, sessionId: uuid})
                       });
                       let data = await response.json();
-                      let respuesta = data.reply || data.response;
+                      let respuesta = data.answer || data.response;
                       if (respuesta) {
                           document.getElementById(loadingId).innerHTML = `<b>Bot:</b> ${respuesta}`;
                       } else {
@@ -891,9 +892,6 @@
               }
           });
     </script>
-    const uuid =  crypto.randomUUID();
-                    body: JSON.stringify({question: userMsg, sessionId: uuid})
-                let respuesta = data.answer || data.response;
 </body>
 
 </html>
