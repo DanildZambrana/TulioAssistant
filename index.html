@@ -828,10 +828,10 @@
                       const response = await fetch('https://automate.danild.dev/webhook/chatbot', {
                           method: 'POST',
                           headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({question: userMsg, sessionId: uuid})
+                          body: JSON.stringify({ message: userMsg })
                       });
                       let data = await response.json();
-                      let respuesta = data.answer || data.response;
+                      let respuesta = data.reply || data.response;
                       if (respuesta) {
                           document.getElementById(loadingId).innerHTML = `<b>Bot:</b> ${respuesta}`;
                       } else {
