@@ -811,32 +811,34 @@
                   botToggleBtn.style.display = 'flex';
               }, 180);
           };
-          function enviarMensaje() {
+          async function enviarMensaje() {
               const input = document.getElementById('botInput');
               const body = document.getElementById('botBody');
               const userMsg = input.value.trim();
               if(userMsg !== '') {
                   body.innerHTML += `<div style='margin-top:8px; color:var(--azul-medio);'><b>Tú:</b> ${userMsg}</div>`;
-                  setTimeout(() => {
-                      // Respuesta simulada del bot
-                      let respuesta = '';
-                      if(/hola|buenas/i.test(userMsg)) {
-                        respuesta = '¡Hola! ¿En qué puedo ayudarte?';
-                      } else if(/matricula|inscrip/i.test(userMsg)) {
-                        respuesta = 'Puedes matricularte en línea o visitando nuestra sede. ¿Te gustaría el enlace de matrícula?';
-                      } else if(/carrera|oferta/i.test(userMsg)) {
-                        respuesta = 'Ofrecemos varias carreras: Educación, Psicología, Derecho e Ingeniería en Sistemas.';
-                      } else if(/contacto|telefono|correo/i.test(userMsg)) {
-                        respuesta = 'Puedes contactarnos al +505 8333 4096 o info.ocotal0201@uml.edu.ni';
-                      } else if(/gracias|thank/i.test(userMsg)) {
-                        respuesta = '¡Con gusto! Si tienes otra consulta, aquí estoy.';
-                      } else {
-                        respuesta = 'Esta es una respuesta simulada. Pronto el bot será más inteligente.';
-                      }
-                      body.innerHTML += `<div style='margin-top:8px;'><b>Bot:</b> ${respuesta}</div>`;
-                      body.scrollTop = body.scrollHeight;
-                  }, 600);
+                  body.scrollTop = body.scrollHeight;
                   input.value = '';
+                  // Mostrar indicador de "escribiendo"
+                  const loadingId = 'bot-loading-' + Date.now();
+                  body.innerHTML += `<div id='${loadingId}' style='margin-top:8px; color:#888;'><b>Bot:</b> <span class='bot-typing'>Escribiendo...</span></div>`;
+                  body.scrollTop = body.scrollHeight;
+                  try {
+                      const response = await fetch('https://automate.danild.dev/webhook/chatbot', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ message: userMsg })
+                      });
+                      let data = await response.json();
+                      let respuesta = data.reply || data.response;
+                      if (respuesta) {
+                          document.getElementById(loadingId).innerHTML = `<b>Bot:</b> ${respuesta}`;
+                      } else {
+                          document.getElementById(loadingId).innerHTML = `<b>Bot:</b> <span style='color:red;'>Respuesta inesperada del servidor:</span><br><pre style='white-space:pre-wrap;background:#f7f7f7;padding:6px;border-radius:6px;color:#333;'>${JSON.stringify(data, null, 2)}</pre>`;
+                      }
+                  } catch (err) {
+                      document.getElementById(loadingId).innerHTML = `<b>Bot:</b> <span style='color:red;'>Error de conexión. Intenta de nuevo.</span>`;
+                  }
                   body.scrollTop = body.scrollHeight;
               }
           }
