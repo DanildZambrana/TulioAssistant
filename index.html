@@ -1630,12 +1630,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener('DOMContentLoaded', function() {
       const themeSelector = document.getElementById('botThemeSelector');
+      const fontSelector = document.getElementById('genkubFontSelector');
+      // Cambiar tema visual
       if (themeSelector) {
         themeSelector.onchange = function() {
           applyBotTheme(this.value);
+          // Si el usuario ya eligió una fuente, la reaplica
+          if (fontSelector && fontSelector.value) {
+            setBotFont(fontSelector.value);
+          }
         };
         // Aplicar tema por defecto
         applyBotTheme(themeSelector.value);
+      }
+      // Cambiar fuente global del bot
+      function setBotFont(font) {
+        const widget = document.querySelector('.bot-widget');
+        if (widget) widget.style.fontFamily = font;
+        // También para header, body, footer
+        const header = document.querySelector('.bot-header');
+        if (header) header.style.fontFamily = font;
+        const body = document.querySelector('.bot-body');
+        if (body) body.style.fontFamily = font;
+        const footer = document.querySelector('.bot-footer');
+        if (footer) footer.style.fontFamily = font;
+      }
+      if (fontSelector) {
+        fontSelector.onchange = function() {
+          setBotFont(this.value);
+        };
+        // Aplicar fuente por defecto si existe
+        setBotFont(fontSelector.value);
       }
     });
     // Mostrar/Ocultar animación escribiendo
