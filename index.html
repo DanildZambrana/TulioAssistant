@@ -1192,9 +1192,34 @@
         speechSynthesis.speak(msg);
       });
     </script>
-        <button id="botConfigBtn" class="bot-gear" aria-label="Configuración" title="Configuración" onclick="toggleBotConfigPanel()">&#9881;</button>
+        <button id="botConfigBtn" class="bot-gear" aria-label="Configuración" title="Configuración">&#9881;</button>
         <button id="botCloseBtn" class="bot-close" aria-label="Cerrar chat">&times;</button>
         <div class="bot-config-panel" id="botConfigPanel">
+          <button id="botConfigCloseBtn" style="background:none;border:none;position:absolute;top:10px;left:10px;font-size:1.7rem;color:#00fff7;cursor:pointer;z-index:10;" title="Cerrar configuración">⟵</button>
+          <label style="display:flex;justify-content:space-between;align-items:center;">Tema visual:
+            <select id="botThemeSelector">
+              <option value="futurista">Futurista</option>
+              <option value="cyberpunk">Cyberpunk</option>
+              <option value="minimalista">Minimalista</option>
+              <option value="glass">Glassmorphism</option>
+              <option value="aurora">Aurora</option>
+              <option value="neon">Neon Dark</option>
+              <option value="rainbow">Rainbow</option>
+              <option value="gold">Gold Black</option>
+              <option value="matrix">Matrix</option>
+              <option value="pastel">Pastel Dream</option>
+              <option value="galaxy">Galaxy Night</option>
+              <option value="lava">Lava Flow</option>
+              <option value="aqua">Aqua Blue</option>
+              <option value="sunset">Sunset Vibes</option>
+              <option value="mint">Mint Candy</option>
+              <option value="peach">Peach Cream</option>
+              <option value="ice">Ice Crystal</option>
+              <option value="forest">Forest Emerald</option>
+              <option value="berry">Berry Punch</option>
+              <option value="retro">Retro 80s</option>
+            </select>
+          </label>
           <label style="display:flex;justify-content:space-between;align-items:center;">Color del Bot:
             <input type="color" id="genkubColorPicker" value="#00f2ff">
           </label>
@@ -1211,7 +1236,7 @@
               <option value="default">Normal</option>
               <option value="friendly">Amigable</option>
               <option value="serious">Serio</option>
-              <option value="cool">Cool 😎</option>
+              <option value="cool">Broder 😎</option>
             </select>
           </label>
           <label style="display:flex;justify-content:space-between;align-items:center;">Texto del bot:
@@ -1243,8 +1268,8 @@
       </div>
     <style>
     /* --- Panel de configuración funcional --- */
-    .bot-config-panel { transition: opacity 0.25s, visibility 0.25s; }
-    .bot-config-panel[hidden] { opacity:0; pointer-events:none; visibility:hidden; }
+    .bot-config-panel { transition: opacity 0.25s, visibility 0.25s, display 0s; display: none; }
+    .bot-config-panel.active { display: block !important; opacity: 1; pointer-events: auto; visibility: visible; }
     /* --- Footer glass y moderno --- */
     .glass-footer {
       background: rgba(30,30,40,0.55);
@@ -1339,14 +1364,280 @@
     </style>
     <script>
     // Panel de configuración funcional
-    function toggleBotConfigPanel() {
-      const panel = document.getElementById('botConfigPanel');
-      if (panel.hasAttribute('hidden')) {
-        panel.removeAttribute('hidden');
-      } else {
-        panel.setAttribute('hidden', '');
+function toggleBotConfigPanel(forceOpen) {
+  const panel = document.getElementById('botConfigPanel');
+  if (forceOpen === true) {
+    panel.classList.add('active');
+    return;
+  }
+  if (forceOpen === false) {
+    panel.classList.remove('active');
+    return;
+  }
+  panel.classList.toggle('active');
+}
+
+// Listeners para abrir/cerrar el panel de configuración
+document.addEventListener('DOMContentLoaded', function() {
+  const configBtn = document.getElementById('botConfigBtn');
+  const closeBtn = document.getElementById('botConfigCloseBtn');
+  if (configBtn) {
+    configBtn.onclick = function(e) {
+      e.preventDefault();
+      toggleBotConfigPanel(true);
+    };
+  }
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      toggleBotConfigPanel(false);
+    };
+  }
+});
+
+    // Temas visuales para el bot
+    const botThemes = {
+      futurista: {
+        '--bot-bg': 'linear-gradient(135deg, #181c2b 60%, #23243a 100%)',
+        '--bot-header-bg': 'rgba(0,80,158,0.82)',
+        '--bot-main': '#00fff7',
+        '--bot-accent': '#ff00cc',
+        '--bot-footer-bg': 'rgba(30,30,40,0.55)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ff00cc 60%, #00fff7 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #23243a 60%, #00fff7 100%)',
+      },
+      cyberpunk: {
+        '--bot-bg': 'linear-gradient(135deg, #1a0033 60%, #ff00cc 100%)',
+        '--bot-header-bg': '#ff00cc',
+        '--bot-main': '#00fff7',
+        '--bot-accent': '#ffea00',
+        '--bot-footer-bg': 'rgba(40,0,60,0.7)',
+        '--bot-font': 'Audiowide, Orbitron, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ffea00 60%, #00fff7 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #1a0033 60%, #ff00cc 100%)',
+      },
+      minimalista: {
+        '--bot-bg': '#fff',
+        '--bot-header-bg': '#222',
+        '--bot-main': '#222',
+        '--bot-accent': '#888',
+        '--bot-footer-bg': '#f4f6fb',
+        '--bot-font': 'Roboto Mono, Arial, sans-serif',
+        '--bot-user-bubble': '#e0e6f7',
+        '--bot-bot-bubble': '#f4f6fb',
+      },
+      glass: {
+        '--bot-bg': 'rgba(255,255,255,0.18)',
+        '--bot-header-bg': 'rgba(0,80,158,0.32)',
+        '--bot-main': '#00fff7',
+        '--bot-accent': '#ff00cc',
+        '--bot-footer-bg': 'rgba(255,255,255,0.22)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'rgba(255,255,255,0.55)',
+        '--bot-bot-bubble': 'rgba(0,255,247,0.18)',
+        '--bot-blur': 'blur(16px) saturate(1.3)',
+      },
+      aurora: {
+        '--bot-bg': 'linear-gradient(120deg, #1ec773 0%, #00509e 40%, #fbc02d 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #00fff7 0%, #ff00cc 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#ff00cc',
+        '--bot-footer-bg': 'linear-gradient(90deg, #1ec773 0%, #fbc02d 100%)',
+        '--bot-font': 'Exo, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #fbc02d 0%, #1ec773 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #00509e 0%, #00fff7 100%)',
+      },
+      neon: {
+        '--bot-bg': 'linear-gradient(135deg, #0f2027 0%, #2c5364 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #ff00cc 0%, #00fff7 100%)',
+        '--bot-main': '#00fff7',
+        '--bot-accent': '#ff00cc',
+        '--bot-footer-bg': 'rgba(30,30,40,0.85)',
+        '--bot-font': 'Audiowide, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ff00cc 60%, #00fff7 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #23243a 60%, #00fff7 100%)',
+        '--bot-glow': '0 0 16px #00fff7, 0 0 32px #ff00cc',
+      },
+      rainbow: {
+        '--bot-bg': 'linear-gradient(270deg, #ff00cc, #00fff7, #fbc02d, #ff9800, #1ec773, #ff00cc)',
+        '--bot-header-bg': 'linear-gradient(90deg, #ff00cc, #00fff7, #fbc02d)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#ff00cc',
+        '--bot-footer-bg': 'linear-gradient(90deg, #ff00cc, #00fff7, #fbc02d)',
+        '--bot-font': 'Orbitron, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ff00cc, #00fff7, #fbc02d)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #00fff7, #fbc02d, #ff00cc)',
+      },
+      gold: {
+        '--bot-bg': 'linear-gradient(135deg, #222 60%, #fbc02d 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #fbc02d 0%, #222 100%)',
+        '--bot-main': '#fbc02d',
+        '--bot-accent': '#fff',
+        '--bot-footer-bg': 'linear-gradient(90deg, #222 0%, #fbc02d 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #fbc02d 60%, #fff 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #222 60%, #fbc02d 100%)',
+      },
+      matrix: {
+        '--bot-bg': 'linear-gradient(135deg, #0f2027 60%, #1ec773 100%)',
+        '--bot-header-bg': '#1ec773',
+        '--bot-main': '#1ec773',
+        '--bot-accent': '#fff',
+        '--bot-footer-bg': 'rgba(30,30,40,0.85)',
+        '--bot-font': 'Roboto Mono, Arial, monospace',
+        '--bot-user-bubble': 'linear-gradient(90deg, #1ec773 60%, #222 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #222 60%, #1ec773 100%)',
+      },
+      pastel: {
+        '--bot-bg': 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%)',
+        '--bot-main': '#a6c1ee',
+        '--bot-accent': '#fbc2eb',
+        '--bot-footer-bg': 'linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #fbc2eb 60%, #a6c1ee 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #a6c1ee 60%, #fbc2eb 100%)',
       }
+      ,
+      galaxy: {
+        '--bot-bg': 'radial-gradient(ellipse at 70% 20%, #2b1055 0%, #7597de 60%, #1b1b2f 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #120136 0%, #5f00ba 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#a18cd1',
+        '--bot-footer-bg': 'linear-gradient(90deg, #120136 0%, #5f00ba 100%)',
+        '--bot-font': 'Orbitron, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #a18cd1 0%, #fbc2eb 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #7597de 60%, #2b1055 100%)',
+      },
+      lava: {
+        '--bot-bg': 'linear-gradient(135deg, #ff512f 0%, #dd2476 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #ff512f 0%, #f09819 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#ff512f',
+        '--bot-footer-bg': 'linear-gradient(90deg, #f09819 0%, #ff512f 100%)',
+        '--bot-font': 'Audiowide, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ff512f 0%, #f09819 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #dd2476 60%, #ff512f 100%)',
+      },
+      aqua: {
+        '--bot-bg': 'linear-gradient(135deg, #43cea2 0%, #185a9d 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#43cea2',
+        '--bot-footer-bg': 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #43cea2 0%, #185a9d 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #185a9d 60%, #43cea2 100%)',
+      },
+      sunset: {
+        '--bot-bg': 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #ff9966 0%, #ff5e62 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#ff5e62',
+        '--bot-footer-bg': 'linear-gradient(90deg, #ff9966 0%, #ff5e62 100%)',
+        '--bot-font': 'Exo, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ff9966 0%, #ff5e62 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #ff5e62 60%, #ff9966 100%)',
+      },
+      mint: {
+        '--bot-bg': 'linear-gradient(135deg, #a8ff78 0%, #78ffd6 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #a8ff78 0%, #78ffd6 100%)',
+        '--bot-main': '#222',
+        '--bot-accent': '#78ffd6',
+        '--bot-footer-bg': 'linear-gradient(90deg, #a8ff78 0%, #78ffd6 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #a8ff78 0%, #78ffd6 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #78ffd6 60%, #a8ff78 100%)',
+      },
+      peach: {
+        '--bot-bg': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)',
+        '--bot-main': '#222',
+        '--bot-accent': '#fcb69f',
+        '--bot-footer-bg': 'linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #ffecd2 0%, #fcb69f 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #fcb69f 60%, #ffecd2 100%)',
+      },
+      ice: {
+        '--bot-bg': 'linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%)',
+        '--bot-main': '#185a9d',
+        '--bot-accent': '#cfdef3',
+        '--bot-footer-bg': 'linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #e0eafc 0%, #cfdef3 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #cfdef3 60%, #e0eafc 100%)',
+      },
+      forest: {
+        '--bot-bg': 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #11998e 0%, #38ef7d 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#11998e',
+        '--bot-footer-bg': 'linear-gradient(90deg, #11998e 0%, #38ef7d 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #11998e 0%, #38ef7d 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #38ef7d 60%, #11998e 100%)',
+      },
+      berry: {
+        '--bot-bg': 'linear-gradient(135deg, #f857a6 0%, #ff5858 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #f857a6 0%, #ff5858 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#f857a6',
+        '--bot-footer-bg': 'linear-gradient(90deg, #f857a6 0%, #ff5858 100%)',
+        '--bot-font': 'Montserrat, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #f857a6 0%, #ff5858 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #ff5858 60%, #f857a6 100%)',
+      },
+      retro: {
+        '--bot-bg': 'linear-gradient(135deg, #fc466b 0%, #3f5efb 100%)',
+        '--bot-header-bg': 'linear-gradient(90deg, #fc466b 0%, #3f5efb 100%)',
+        '--bot-main': '#fff',
+        '--bot-accent': '#fc466b',
+        '--bot-footer-bg': 'linear-gradient(90deg, #fc466b 0%, #3f5efb 100%)',
+        '--bot-font': 'Orbitron, Audiowide, Arial, sans-serif',
+        '--bot-user-bubble': 'linear-gradient(90deg, #fc466b 0%, #3f5efb 100%)',
+        '--bot-bot-bubble': 'linear-gradient(120deg, #3f5efb 60%, #fc466b 100%)',
+      }
+    };
+
+    function applyBotTheme(themeName) {
+      const theme = botThemes[themeName];
+      if (!theme) return;
+      const root = document.documentElement;
+      for (const key in theme) {
+        root.style.setProperty(key, theme[key]);
+      }
+      // Cambiar clases para burbujas si es necesario
+      document.querySelectorAll('.bot-body .bot-msg.user .bot-bubble').forEach(el => {
+        el.style.background = theme['--bot-user-bubble'];
+      });
+      document.querySelectorAll('.bot-body .bot-msg.bot .bot-bubble').forEach(el => {
+        el.style.background = theme['--bot-bot-bubble'];
+      });
+      // Cambiar fondo del widget
+      const widget = document.querySelector('.bot-widget');
+      if (widget) widget.style.background = theme['--bot-bg'];
+      // Cambiar header
+      const header = document.querySelector('.bot-header');
+      if (header) header.style.background = theme['--bot-header-bg'];
+      // Cambiar footer
+      const footer = document.querySelector('.bot-footer');
+      if (footer) footer.style.background = theme['--bot-footer-bg'];
+      // Cambiar fuente
+      if (widget) widget.style.fontFamily = theme['--bot-font'];
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeSelector = document.getElementById('botThemeSelector');
+      if (themeSelector) {
+        themeSelector.onchange = function() {
+          applyBotTheme(this.value);
+        };
+        // Aplicar tema por defecto
+        applyBotTheme(themeSelector.value);
+      }
+    });
     // Mostrar/Ocultar animación escribiendo
     function mostrarEscribiendo(mostrar=true) {
       const typingMsg = document.getElementById('botTypingMsg');
