@@ -704,13 +704,15 @@
         body.appendChild(botDiv);
         body.scrollTop = body.scrollHeight;
         try {
+          // Generar UUID para la sesión
+          const uuid = crypto.randomUUID();
           const response = await fetch('https://automate.danild.dev/webhook/chatbot', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: userMsg })
+            body: JSON.stringify({ question: userMsg, sessionId: uuid })
           });
           let data = await response.json();
-          let respuesta = data.reply || data.response || data.answer;
+          let respuesta = data.answer || data.response;
           // Si sigue sin respuesta, busca la primera propiedad string
           if (!respuesta && typeof data === 'object' && data !== null) {
             for (const key in data) {
