@@ -15,9 +15,12 @@
       box-shadow: 0 8px 48px 0 #00fff799, 0 2px 24px #0008, 0 0 0 2.5px #00fff7cc;
       border: none;
       color: #e0e6f7;
+      width: 600px;
       min-width: 340px;
-      max-width: 98vw;
-      overflow: visible;
+      max-width: 600px;
+      min-height: 420px;
+      max-height: 700px;
+      overflow: hidden;
       position: fixed;
       right: 30px;
       bottom: 30px;
@@ -142,7 +145,15 @@
       transform: scale(1.08) rotate(-2deg);
     }
     @media (max-width: 700px) {
-      .bot-widget { width: 99vw; right: 0.5vw; bottom: 80px; }
+      .bot-widget {
+        width: 99vw !important;
+        min-width: unset !important;
+        max-width: 99vw !important;
+        right: 0.5vw;
+        bottom: 80px;
+        min-height: 100px;
+        max-height: 99vh;
+      }
       .bot-fab { right: 2vw; }
     }
     /* --- PANEL DE CONFIGURACIÓN FUTURISTA --- */
@@ -614,11 +625,13 @@
       if (botToggleBtn && botWidget) {
         botToggleBtn.onclick = function() {
           botWidget.style.display = 'flex';
-          botWidget.style.transform = 'scale(0.8)';
-          setTimeout(() => {
-            botWidget.style.transform = 'scale(1)';
-            document.getElementById('botInput').focus();
-          }, 10);
+          botWidget.style.transform = 'scale(1)';
+          botWidget.style.width = '600px';
+          botWidget.style.maxWidth = '600px';
+          botWidget.style.minWidth = '340px';
+          botWidget.style.minHeight = '420px';
+          botWidget.style.maxHeight = '700px';
+          document.getElementById('botInput').focus();
           botToggleBtn.style.display = 'none';
         };
       }
