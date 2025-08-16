@@ -6,6 +6,18 @@
 			"label": "Abrir index.html en el navegador",
 			"command": "start index.html",
 			"group": "build"
+		},
+		{
+			"label": "Abrir index.html en Opera GX",
+			"type": "shell",
+			"command": "start opera \"index.html\"",
+			"group": "build"
+		},
+		{
+			"label": "Abrir bot.html en Opera GX",
+			"type": "shell",
+			"command": "start opera \"bot.html\"",
+			"group": "build"
 		}
 	]
 }

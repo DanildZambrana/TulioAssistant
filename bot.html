@@ -10,49 +10,41 @@
   <style>
     /* --- TEMA FUTURISTA OSCURO Y NEÓN PARA EL CHATBOT --- */
     .bot-widget {
-      background: linear-gradient(135deg, #181c2b 60%, #23243a 100%);
-      border-radius: 32px;
-      box-shadow: 0 8px 48px 0 #00fff799, 0 2px 24px #0008, 0 0 0 2.5px #00fff7cc;
-      border: none;
-      color: #e0e6f7;
-      width: 600px;
-      min-width: 340px;
-      max-width: 600px;
+      background: #f7fafd;
+      border-radius: 18px;
+      box-shadow: 0 4px 32px 0 #00336622, 0 1px 8px #0002;
+      border: 1.5px solid #e3e8ee;
+      color: #1a2330;
+      width: 340px;
+      min-width: 260px;
+      max-width: 340px;
       min-height: 420px;
-      max-height: 700px;
+      max-height: 650px;
       overflow: hidden;
       position: fixed;
-      right: 30px;
-      bottom: 30px;
+      right: 40px;
+      bottom: 40px;
       z-index: 1200;
       display: flex;
       flex-direction: column;
       animation: botWidgetFadeIn 0.5s cubic-bezier(.4,1.4,.6,1) 1;
       transition: box-shadow 0.2s, transform 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
     }
     .bot-widget::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      border-radius: 32px;
-      pointer-events: none;
-      background: radial-gradient(ellipse at 80% 10%, #00fff733 0%, #ff00cc22 100%);
-      filter: blur(32px) brightness(1.1) saturate(1.2);
-      opacity: 0.7;
-      z-index: 2;
+      display: none;
     }
     .bot-header .bot-gear:hover {
-      color: #ff00cc;
-      transform: rotate(30deg) scale(1.15);
+      color: #003366;
+      transform: scale(1.1);
     }
     .bot-body {
       background: none;
-      color: #e0e6f7;
-      font-size: 1.13rem;
-      padding: 1.3rem 1.3rem 0.9rem 1.3rem;
+      color: #1a2330;
+      font-size: 1.08rem;
+      padding: 1.1rem 1.1rem 0.7rem 1.1rem;
       min-height: 140px;
-      max-height: 380px;
+      max-height: 340px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -69,20 +61,20 @@
       animation: floatIn 0.5s cubic-bezier(.4,1.4,.6,1);
     }
     .bot-body .bot-msg.bot .bot-bubble {
-      background: linear-gradient(120deg, #23243a 60%, var(--robot-main, #00fff7) 100%);
-      color: #fff;
-      border-radius: 20px 20px 20px 6px;
-      border: 1.5px solid var(--robot-main, #00fff7);
-      box-shadow: 0 2px 16px #00fff733, 0 1px 8px #ff00cc33;
+      background: #e3e8ee;
+      color: #003366;
+      border-radius: 14px 14px 14px 6px;
+      border: 1.5px solid #c2d1e0;
+      box-shadow: 0 1px 4px #00336611;
       position: relative;
       overflow: visible;
     }
     .bot-body .bot-msg.user .bot-bubble {
-      background: linear-gradient(90deg, #ff00cc 60%, #00fff7 100%);
-      color: #fff;
-      border-radius: 20px 20px 6px 20px;
-      border: 1.5px solid #ff00cc;
-      box-shadow: 0 2px 16px #ff00cc33, 0 1px 8px #00fff733;
+      background: #fff;
+      color: #1a2330;
+      border-radius: 14px 14px 6px 14px;
+      border: 1.5px solid #c2d1e0;
+      box-shadow: 0 1px 4px #00336611;
       align-self: flex-end;
     }
     .bot-body .bot-bubble {
@@ -101,48 +93,49 @@
       animation: botTypingBlink 1.2s infinite;
     }
     .bot-footer {
-      padding: 1rem 1.3rem 1.1rem 1.3rem;
-      border-top: 2px solid #00fff7;
-      background: none;
+      padding: 0.7rem 1.1rem 0.8rem 1.1rem;
+      border-top: 1.5px solid #e3e8ee;
+      background: #f7fafd;
       display: flex;
-      gap: 0.7rem;
       align-items: center;
-      box-shadow: 0 -2px 12px #00fff733;
+      box-shadow: none;
     }
     .bot-input {
-      width: 80%;
-      padding: 0.7rem 1rem;
-      border-radius: 12px;
-      border: 1.5px solid #00fff7;
-      font-size: 1.12rem;
-      background: #23243a;
-      color: #fff;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      border: 1.5px solid #c2d1e0;
+      font-size: 1.08rem;
+      background: #fff;
+      color: #1a2330;
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
-      box-shadow: 0 1px 8px #00fff711;
+      box-shadow: none;
+      margin-right: 0.5rem;
     }
     .bot-input:focus {
-      border-color: #ff00cc;
-      box-shadow: 0 0 0 3px #ff00cc33;
+      border-color: #003366;
+      box-shadow: 0 0 0 2px #00336622;
     }
     .bot-send {
-      padding: 0.7rem 1.5rem;
-      background: linear-gradient(90deg, #00fff7 60%, #ff00cc 100%);
+      padding: 0.6rem 1.2rem;
+      background: #003366;
       color: #fff;
       border: none;
-      border-radius: 12px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 800;
-      font-size: 1.12rem;
-      box-shadow: 0 2px 12px #00fff733, 0 1px 8px #ff00cc33;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.18s;
-      letter-spacing: 0.5px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      box-shadow: none;
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+      letter-spacing: 0.2px;
+      margin-left: 0;
     }
     .bot-send:hover {
-      background: linear-gradient(90deg, #ff00cc 60%, #00fff7 100%);
+      background: #0050b3;
       color: #fff;
-      box-shadow: 0 4px 24px #ff00cc55, 0 2px 12px #00fff733;
-      transform: scale(1.08) rotate(-2deg);
+      transform: scale(1.04);
     }
     @media (max-width: 700px) {
       .bot-widget {
@@ -200,56 +193,26 @@
   </style>
 </head>
 <body>
-  <!-- Botón flotante con avatar SVG 3D animado de Tulio -->
+  <!-- Botón flotante profesional -->
   <button id="botToggleBtn" class="bot-fab" aria-label="Abrir chat de asistencia" style="
-    background: linear-gradient(135deg, #181c2b 60%, #23243a 100%);
-    box-shadow: 0 0 36px 12px #00fff799, 0 4px 32px #7f00ff77, 0 0 0 8px #00fff733;
-    border: 3px solid #00fff7cc;
-    width: 92px;
-    height: 92px;
+    background: #003366;
+    box-shadow: 0 2px 12px #00336633;
+    border: 2px solid #e3e8ee;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 40px;
+    right: 40px;
     z-index: 1100;
     transition: box-shadow 0.25s, background 0.25s, transform 0.18s;
     overflow: visible;
     border-radius: 50%;
     padding: 0;
   ">
-    <span style="
-      display: block;
-      width: 74px;
-      height: 74px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 60% 40%, #23243a 60%, #00fff7 100%);
-      box-shadow: 0 0 32px 8px #00fff799, 0 2px 12px #7f00ff55;
-      position: relative;
-      animation: botFabPulse 2.2s infinite alternate;
-      margin: 0 auto;
-      overflow: hidden;
-    ">
-      <img src="UML-Imagenes.png/Imagen de WhatsApp 2025-07-30 a las 13.22.01_ec68b39f.jpg" alt="Logo Tulio" style="width:74px;height:74px;border-radius:50%;object-fit:cover;box-shadow:0 0 16px #00fff7cc;">
-      <span style="
-        position: absolute;
-        bottom: -18px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 1.1rem;
-        color: #fff;
-        text-shadow: 0 2px 8px #00fff7cc, 0 1px 0 #2228;
-        font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
-        letter-spacing: 1px;
-        font-weight: 700;
-        pointer-events: none;
-        opacity: 0.92;
-        text-align: center;
-        width: 80px;
-        line-height: 1.1;
-      ">Tulio</span>
-    </span>
+    <img src="UML-Imagenes.png/Imagen de WhatsApp 2025-07-30 a las 13.22.01_ec68b39f.jpg" alt="Logo Tulio" style="width:38px;height:38px;border-radius:50%;object-fit:cover;box-shadow:0 0 8px #00336655;">
   </button>
   <div class="bot-widget" id="botWidget" style="display:none;">
     <div class="bot-header">
@@ -260,73 +223,16 @@
         </span>
         <div id="genkubBotText" style="margin-top:0.1em;text-align:center;font-size:1em;font-family:'Orbitron',sans-serif;color:#00f2ff;line-height:1.1;">¡Hola, soy Tulio ai asisten-UML!</div>
       </div>
-      <button id="botConfigBtn" class="bot-gear" aria-label="Configuración" title="Configuración">&#9881;</button>
-      <button id="botCloseBtn" class="bot-close" aria-label="Cerrar chat">&times;</button>
-    <div class="bot-config-panel" id="botConfigPanel">
-      <button id="botConfigCloseBtn" style="background:none;border:none;position:absolute;top:10px;left:10px;font-size:1.7rem;color:#00fff7;cursor:pointer;z-index:10;" title="Cerrar configuración">⟵</button>
-      <label style="display:flex;justify-content:space-between;align-items:center;">Tema visual:
-        <select id="botThemeSelector">
-          <option value="futurista">Futurista</option>
-          <option value="cyberpunk">Cyberpunk</option>
-          <option value="minimalista">Minimalista</option>
-          <option value="glass">Glassmorphism</option>
-          <option value="aurora">Aurora</option>
-          <option value="neon">Neon Dark</option>
-          <option value="rainbow">Rainbow</option>
-          <option value="gold">Gold Black</option>
-          <option value="matrix">Matrix</option>
-          <option value="pastel">Pastel Dream</option>
-          <option value="galaxy">Galaxy Night</option>
-          <option value="lava">Lava Flow</option>
-          <option value="aqua">Aqua Blue</option>
-          <option value="sunset">Sunset Vibes</option>
-          <option value="mint">Mint Candy</option>
-          <option value="peach">Peach Cream</option>
-          <option value="ice">Ice Crystal</option>
-          <option value="forest">Forest Emerald</option>
-          <option value="berry">Berry Punch</option>
-          <option value="retro">Retro 80s</option>
-        </select>
-      </label>
-      <div style="margin-bottom:0.7em;">
-        <div style="font-weight:600;color:#00fff7;margin-bottom:0.3em;">Colores premium únicos:</div>
-        <div id="botColorPalette" style="display:flex;gap:0.5em;flex-wrap:wrap;">
-          <!-- Incluye aquí los botones de colores premium -->
-        </div>
+      <div style="display:flex;gap:0.5em;justify-content:flex-end;width:100%;margin-top:-2.2em;margin-bottom:0.5em;">
+        <button id="botConfigBtn" class="bot-gear" aria-label="Configuración" title="Configuración" style="background:none;border:none;font-size:1.3em;color:#003366;cursor:pointer;">&#9881;</button>
+        <button id="botCloseBtn" class="bot-close" aria-label="Cerrar chat" style="background:none;border:none;font-size:1.5em;color:#003366;cursor:pointer;">&times;</button>
       </div>
-      <label style="display:flex;justify-content:space-between;align-items:center;">Color personalizado:
-        <input type="color" id="genkubColorPicker" value="#00f2ff">
-      </label>
-      <label style="display:flex;justify-content:space-between;align-items:center;">Fuente:
-        <select id="genkubFontSelector">
-          <option value="Montserrat, Arial, sans-serif">Montserrat</option>
-          <option value="Orbitron, Arial, sans-serif">Orbitron</option>
-          <option value="Exo, Arial, sans-serif">Exo</option>
-          <option value="Audiowide, Arial, sans-serif">Audiowide</option>
-          <option value="Roboto Mono, Arial, monospace">Roboto Mono</option>
-          <option value="UnifrakturCook, cursive">UnifrakturCook (Gótica)</option>
-          <option value="Black Ops One, cursive">Black Ops One</option>
-          <option value="Press Start 2P, cursive">Press Start 2P</option>
-          <option value="Rubik Mono One, Arial, sans-serif">Rubik Mono One</option>
-          <option value="Permanent Marker, cursive">Permanent Marker</option>
-          <option value="Pacifico, cursive">Pacifico</option>
-          <option value="Zen Dots, Arial, sans-serif">Zen Dots</option>
-          <option value="Staatliches, Arial, sans-serif">Staatliches</option>
-          <option value="Fruktur, cursive">Fruktur</option>
-        </select>
-      </label>
-      <label style="display:flex;justify-content:space-between;align-items:center;">Expresión:
-        <select id="genkubFaceSelector">
-          <option value="default">Normal</option>
-          <option value="friendly">Amigable</option>
-          <option value="serious">Serio</option>
-          <option value="cool">Broder 😎</option>
-        </select>
-      </label>
+    <div class="bot-config-panel" id="botConfigPanel" style="min-width:220px;">
+      <button id="botConfigCloseBtn" style="background:none;border:none;position:absolute;top:10px;left:10px;font-size:1.5rem;color:#003366;cursor:pointer;z-index:10;" title="Cerrar configuración">⟵</button>
       <label style="display:flex;justify-content:space-between;align-items:center;">Texto del bot:
-        <input type="text" id="genkubTextInput" placeholder="¿En qué te ayudo?">
+        <input type="text" id="genkubTextInput" placeholder="¿En qué te ayudo?" style="width:70%;">
       </label>
-      <button id="genkubSpeakBtn" style="background:#00f2ff;color:black;font-weight:bold;cursor:pointer;margin-top:0.5em;">🔊 Hablar</button>
+      <button id="genkubSpeakBtn" style="background:#003366;color:white;font-weight:bold;cursor:pointer;margin-top:0.5em;border-radius:6px;padding:0.4em 1em;border:none;">🔊 Hablar</button>
     </div>
     <div class="bot-body" id="botBody">
       <div class="bot-msg bot">
@@ -341,7 +247,7 @@
       </div>
     </div>
     <div class="bot-footer glass-footer">
-      <div class="input-glass-wrap">
+      <div class="input-glass-wrap" style="display:flex;align-items:center;width:100%;gap:0;">
         <input class="bot-input glass-input" id="botInput" type="text" placeholder="Escribe tu mensaje..." autocomplete="off" />
         <button class="bot-send glass-send" onclick="enviarMensaje()">
           <span>Enviar</span>
